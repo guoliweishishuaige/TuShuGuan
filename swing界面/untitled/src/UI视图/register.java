@@ -1,6 +1,7 @@
 package UI视图;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class register extends JDialog {
@@ -14,6 +15,12 @@ public class register extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        int windowWidth = this.getWidth(); //获得窗口宽
+        int windowHeight = this.getHeight(); //获得窗口高
+        Toolkit kit = Toolkit.getDefaultToolkit(); //定义工具包
+        int screenWidth = kit.getScreenSize().width; //获取屏幕的宽
+        int screenHeight = kit.getScreenSize().height; //获取屏幕的高
+        this.setLocation(screenWidth/3 - windowWidth/3, screenHeight/3 - windowHeight/3);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

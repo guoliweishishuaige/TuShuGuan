@@ -7,6 +7,7 @@ import util.StringUtil;
 
 import javax.rmi.CORBA.Util;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
 
@@ -21,9 +22,17 @@ public class Controller_loading extends JDialog {
     private RegisterDao registerDao=new RegisterDao();
 
     public Controller_loading() {
+        setLocationRelativeTo(null);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        int windowWidth = this.getWidth(); //获得窗口宽
+        int windowHeight = this.getHeight(); //获得窗口高
+        Toolkit kit = Toolkit.getDefaultToolkit(); //定义工具包
+        int screenWidth = kit.getScreenSize().width; //获取屏幕的宽
+        int screenHeight = kit.getScreenSize().height; //获取屏幕的高
+        this.setLocation(screenWidth/4 - windowWidth/4, screenHeight/4 - windowHeight/4);//设置窗口居中显示
+
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -98,5 +107,10 @@ public class Controller_loading extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+
     }
 }
