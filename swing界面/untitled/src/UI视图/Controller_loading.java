@@ -37,7 +37,6 @@ public class Controller_loading extends JDialog {
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 loginActionPerformed(e);
-                
             }
         });
 
@@ -76,6 +75,7 @@ public class Controller_loading extends JDialog {
         }
         if(StringUtil.isEmpty(password)){
             JOptionPane.showMessageDialog(null,"密码不能为空");
+            return;
         }
         Register res=new Register(username,password);
         Connection con=null;

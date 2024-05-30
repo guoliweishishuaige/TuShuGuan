@@ -1,17 +1,27 @@
 package UI视图;
 
+
+import madel.User;
+import util.StringUtil;
+import util.DbUtil;
+import dao.UserDao;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
 
 public class Reader_loading extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton 登录Button;
-    private JButton 管理者登录Button;
+    private JButton DLButton;
+    private JButton GLZDLButton;
     private JPasswordField passwordField2;
     private JTextField textField1;
+
+    private DbUtil dbutil=new DbUtil();
+    private UserDao userDao=new UserDao();
 
     public Reader_loading() {
         setContentPane(contentPane);
@@ -36,6 +46,12 @@ public class Reader_loading extends JDialog {
             }
         });
 
+        DLButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                loginActionPerformed(e);
+            }
+        });
+
         // 点击 X 时调用 onCancel()
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -50,6 +66,32 @@ public class Reader_loading extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
+    private void loginActionPerformed(ActionEvent e) {
+        String username = textField1.getText();
+        String password = new String(this.passwordField2.getPassword());
+        if(StringUtil.isEmpty(username)){
+            JOptionPane.showMessageDialog(null,"用户名不能为空！");
+            return;
+        }
+        if(StringUtil.isEmpty(password)){
+            JOptionPane.showMessageDialog(null,"密码不能为空");
+            return;
+        }
+        User user = new User(username,password);
+        Connection con=null;
+        try {
+            con= dbutil.getCon();
+            User currentUser=userDao.login(con,user);
+            if(currentUser!=null){
+                JOptionPane.showMessageDialog(null,"登陆成功");
+            }else{
+                JOptionPane.showMessageDialog(null,"用户名或密码错误");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void onOK() {
