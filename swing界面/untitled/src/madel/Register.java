@@ -8,6 +8,16 @@ public class Register {
     private String name;//用户名
     private String password;//密码
 
+    public Register() {
+        super();
+    }
+
+    public Register(String name, String password) {
+        super();
+        this.name = name;
+        this.password = password;
+    }
+
     public int getId() {
         return id;
     }
@@ -31,5 +41,6 @@ public class Register {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
 }
